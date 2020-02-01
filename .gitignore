@@ -1,0 +1,9 @@
+# NPM modules
+node_modules
+
+# Project configurations
+.env
+
+# Certificates
+*.key
+*.crt
