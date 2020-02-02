@@ -106,10 +106,16 @@ This command will send a message to a specific topic.
 ./cli.js send my-test-topic-name '{"test": "structured data", "ok": true}'
 ```
 
-### Synchronize Thing's Shadow
-
+### Synchronize Thing's shadow
 
 This command will listen for shadow `delta` and update state with a `reported` that solve the difference. It also empty `desired` state to permit the calculation of the next deltas.
 ```bash
 ./cli.js sync MyThingName
+```
+
+### Process Thing's job
+
+This command will process a Thing Job simulating a steps executions.
+```bash
+./cli.js job MyThingName customJob
 ```
