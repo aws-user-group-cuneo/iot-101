@@ -77,12 +77,12 @@ and this will print your IoT endpoint:
 ```
 xxxxxxxxxx.iot.eu-west-1.amazonaws.com
 ```
-set this value into `.env` file
+set this value into `.env` file:
 ```
 HOST=xxxxxxxxxx.iot.eu-west-1.amazonaws.com
 ```
 
-Optionally set a custom client identifier. Within your AWS account, the AWS IoT platform will only allow one connection per client ID. Many of the example programs run as two processes which communicate with one another. If you don't specify a client ID, the example programs will generate random client IDs
+Optionally set a custom client identifier. Within your AWS account, the AWS IoT platform will only allow one connection per client ID. Many of the example programs run as two processes which communicate with one another. If you don't specify a client ID, the example programs will generate random client IDs. Set this value into `.env` file:
 ```
 CLIENT_ID=my-client
 ```
@@ -121,7 +121,6 @@ Upload job document files from `./jobs` into a S3 bucket, then create jobs selec
   "operation": "dummy",
   "steps": 5
 }
-
 ```
 
 This command will process Thing's Jobs simulating a steps executions.
