@@ -38,7 +38,16 @@ exports.handler = (argv) => {
     console.log('----------------------')
 
     // Set job in progress state
-    job.inProgress({ operation: job.id, step: 'starting..' })
+    job.inProgress({ operation: job.operation, step: 'starting..' }, err => {if (err) console.error(err)})
+
+    // Check if is an "error job"
+    if (job.operation=== 'error') {
+      job.failed({ operation: job.operation, errorCondition: 'Job fail with error'}, err => {if (err) console.error(err)})
+      console.error('Error happens during job execution')
+      console.log('----------------------')
+      console.log('Job failed!')
+      return
+    }
 
     // Simulate works
     const totalStep = job.document.steps || 5
@@ -47,7 +56,7 @@ exports.handler = (argv) => {
       console.log(`Executing step ${currentStep} of ${totalStep}..`)
 
       // Set job in progress state with a custom message
-      job.inProgress({ operation: job.id, step: `step ${currentStep} of ${totalStep}` })
+      job.inProgress({ operation: job.operation, step: `step ${currentStep} of ${totalStep}` }, err => {if (err) console.error(err)})
 
       // Check current simulated step
       currentStep++
@@ -57,14 +66,20 @@ exports.handler = (argv) => {
         // Complete job
         console.log('----------------------')
         console.log('Job completed!')
-        job.succeeded({ operation: job.id, step: 'all operations completed successfully!' })
+        job.succeeded({ operation: job.operation, step: 'all operations completed successfully!' }, err => {if (err) console.error(err)})
       }
     }, 1000)
     
   })
 
-  jobs.startJobNotifications(argv.thing, function() {
-    console.log(`Start listening for thing ${argv.thing}'s jobs`)
+  jobs.startJobNotifications(argv.thing, function(err) {
+    if (err) {
+      console.error(err)
+      console.log('Error starting listener, disconnecting..')
+      jobs.end()
+      return
+    }
+    console.log(`Start listening for thing ${argv.thing}'s jobs..`)
   })
 
   jobs.on('close', () => {

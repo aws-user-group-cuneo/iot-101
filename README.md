@@ -115,7 +115,16 @@ This command will listen for shadow `delta` and update state with a `reported` t
 
 ### Process Thing's job
 
-This command will process a Thing Job simulating a steps executions.
+Upload job document files from `./jobs` into a S3 bucket, then create jobs selecting these documents.
+```json
+{
+  "operation": "dummy",
+  "steps": 5
+}
+
+```
+
+This command will process Thing's Jobs simulating a steps executions.
 ```bash
-./cli.js job MyThingName customJob
+./cli.js job MyThingName
 ```
